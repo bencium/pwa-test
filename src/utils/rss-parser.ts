@@ -1,14 +1,14 @@
 import type { NewsArticle } from '../types/news';
 
-// RSS Feed configuration - Healthcare focused (proxy-compatible feeds)
+// RSS Feed configuration - Healthcare focused with images
 const RSS_FEEDS = {
-  cdc: 'https://tools.cdc.gov/api/v2/resources/media/132608.rss',
-  who: 'https://www.who.int/rss-feeds/news-english.xml',
-  reuters_health: 'https://feeds.reuters.com/reuters/healthNews',
-  sciencedaily_health: 'https://www.sciencedaily.com/rss/health_medicine.xml',
+  cnn_health: 'https://rss.cnn.com/rss/cnn_health.rss',
+  fox_health: 'https://moxie.foxnews.com/google-publisher/health.xml',
+  nbc_health: 'https://feeds.nbcnews.com/nbcnews/public/health',
+  abc_health: 'https://abcnews.go.com/abcnews/healthheadlines',
   healthday: 'https://consumer.healthday.com/rss/health-news.rss',
-  medpagetoday: 'https://www.medpagetoday.com/rss/all-breaking-news.xml',
-  default: 'https://www.sciencedaily.com/rss/health_medicine.xml'
+  reuters_health: 'https://feeds.reuters.com/reuters/healthNews',
+  default: 'https://rss.cnn.com/rss/cnn_health.rss'
 };
 
 interface RSSItem {
@@ -52,20 +52,32 @@ export class RSSParser {
   }
 
   private static extractImageFromContent(content: string, description: string): string | undefined {
-    // Try to extract image from content or description
-    const imgRegex = /<img[^>]+src="([^">]+)"/i;
-    let match = content.match(imgRegex);
+    // Try multiple image extraction patterns for news RSS feeds
+    const patterns = [
+      /<img[^>]+src="([^">]+)"/i,  // Standard img tag
+      /<media:content[^>]+url="([^">]+)"/i,  // Media RSS
+      /<enclosure[^>]+url="([^">]+)"[^>]+type="image/i,  // Enclosure
+      /url="([^"]*\.(jpg|jpeg|png|gif|webp)[^"]*)"[^>]*>/i  // URL in attributes
+    ];
     
-    if (!match) {
-      match = description.match(imgRegex);
+    const textToSearch = content + ' ' + description;
+    
+    for (const pattern of patterns) {
+      const match = textToSearch.match(pattern);
+      if (match && match[1]) {
+        const imageUrl = match[1];
+        // More flexible image URL validation
+        if (imageUrl.match(/\.(jpg|jpeg|png|gif|webp)/i) && imageUrl.startsWith('http')) {
+          return imageUrl;
+        }
+      }
     }
     
-    if (match && match[1]) {
-      // Ensure it's a valid image URL
-      const imageUrl = match[1];
-      if (imageUrl.match(/\.(jpg|jpeg|png|gif|webp)(\?|$)/i)) {
-        return imageUrl;
-      }
+    // Try to find any http image URL in the text
+    const urlPattern = /https?:\/\/[^\s<>"]+\.(jpg|jpeg|png|gif|webp)(\?[^\s<>"]*)?/i;
+    const urlMatch = textToSearch.match(urlPattern);
+    if (urlMatch && urlMatch[0]) {
+      return urlMatch[0];
     }
     
     return undefined;
@@ -126,11 +138,11 @@ export class RSSParser {
   }
 
   static async fetchMultipleFeeds(feedUrls: string[] = [RSS_FEEDS.default]): Promise<NewsArticle[]> {
-    // Try multiple healthcare feeds as fallbacks
+    // Try multiple healthcare feeds with images as fallbacks
     const defaultFeeds = [
-      RSS_FEEDS.sciencedaily_health,
-      RSS_FEEDS.reuters_health,
-      RSS_FEEDS.who
+      RSS_FEEDS.cnn_health,
+      RSS_FEEDS.nbc_health,
+      RSS_FEEDS.reuters_health
     ];
     
     const feedsToTry = feedUrls.length > 0 ? feedUrls : defaultFeeds;

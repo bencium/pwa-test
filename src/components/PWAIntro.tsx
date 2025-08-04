@@ -47,7 +47,7 @@ const PWAIntro = () => {
       {/* Main PWA Badge */}
       <motion.div
         whileHover={{ scale: 1.02 }}
-        className="bg-gradient-to-r from-black to-gray-800 text-white rounded-xl p-4 cursor-pointer"
+        className="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-xl p-4 cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
