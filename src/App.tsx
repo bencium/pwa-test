@@ -163,8 +163,8 @@ function App() {
       >
         <AppBanner title={getViewTitle()} />
         {/* MedHubAI Branding */}
-        <div className="bg-blue-50 border-b border-blue-100 px-4 py-2">
-          <p className="text-center text-xs text-blue-700 font-medium">
+        <div className="px-4 py-2">
+          <p className="text-center text-xs text-gray-600 font-medium">
             Brought to you by MedHubAI.pro
           </p>
         </div>

@@ -48,13 +48,19 @@ export class RSSParser {
   }
 
   private static extractImageFromItem(item: RSSItem): string | undefined {
+    console.log('🔍 Extracting image from item:', item.title);
+    console.log('📸 Item thumbnail:', item.thumbnail);
+    console.log('📦 Item enclosure:', item.enclosure);
+    
     // First, check for direct thumbnail field from RSS2JSON
     if (item.thumbnail && item.thumbnail.startsWith('http')) {
+      console.log('✅ Found thumbnail:', item.thumbnail);
       return item.thumbnail;
     }
     
     // Check enclosure thumbnail
     if (item.enclosure?.thumbnail && item.enclosure.thumbnail.startsWith('http')) {
+      console.log('✅ Found enclosure thumbnail:', item.enclosure.thumbnail);
       return item.enclosure.thumbnail;
     }
     
@@ -82,9 +88,11 @@ export class RSSParser {
     const urlPattern = /https?:\/\/[^\s<>"]+\.(jpg|jpeg|png|gif|webp)(\?[^\s<>"]*)?/i;
     const urlMatch = textToSearch.match(urlPattern);
     if (urlMatch && urlMatch[0]) {
+      console.log('✅ Found image in text:', urlMatch[0]);
       return urlMatch[0];
     }
     
+    console.log('❌ No image found for:', item.title);
     return undefined;
   }
 
@@ -102,6 +110,10 @@ export class RSSParser {
     const cleanTitle = this.stripHtml(item.title);
     const cleanDescription = this.stripHtml(item.description);
     const cleanContent = item.content ? this.stripHtml(item.content) : cleanDescription;
+    const imageUrl = this.extractImageFromItem(item);
+    
+    console.log('🏗️ Parsed article:', cleanTitle);
+    console.log('🖼️ Final imageUrl:', imageUrl);
     
     return {
       id: this.generateId(cleanTitle, item.link),
@@ -110,7 +122,7 @@ export class RSSParser {
       content: cleanContent.length > 500 ? cleanContent : cleanDescription.repeat(3), // Ensure minimum content length
       author: item.author || 'News Staff',
       publishedAt: item.pubDate || new Date().toISOString(),
-      imageUrl: this.extractImageFromItem(item),
+      imageUrl: imageUrl,
       category: item.category || category,
       readTime: this.calculateReadTime(cleanContent)
     };

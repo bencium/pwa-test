@@ -33,16 +33,20 @@ const NewsCard = ({ article, isFavorite, onClick, onToggleFavorite }: NewsCardPr
       className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:bg-gray-50 transition-colors duration-200"
       onClick={onClick}
     >
-      {article.imageUrl && (
-        <div className="aspect-video w-full overflow-hidden">
+      <div className="aspect-video w-full overflow-hidden">
+        {article.imageUrl ? (
           <img 
             src={article.imageUrl} 
             alt={article.title}
             className="w-full h-full object-cover"
             loading="lazy"
           />
-        </div>
-      )}
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500 text-sm font-medium">No image yet</span>
+          </div>
+        )}
+      </div>
       
       <div className="p-4">
         <div className="flex items-start justify-between gap-3 mb-2">
