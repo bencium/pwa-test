@@ -144,7 +144,7 @@ function App() {
         return 'Profile';
       case 'home':
       default:
-        return 'News Reader';
+        return 'MedHubAI';
     }
   };
 
@@ -162,6 +162,12 @@ function App() {
         transition={{ duration: 0.3 }}
       >
         <AppBanner title={getViewTitle()} />
+        {/* MedHubAI Branding */}
+        <div className="bg-blue-50 border-b border-blue-100 px-4 py-2">
+          <p className="text-center text-xs text-blue-700 font-medium">
+            Brought to you by MedHubAI.pro
+          </p>
+        </div>
       </motion.div>
       
       {/* Main Content */}

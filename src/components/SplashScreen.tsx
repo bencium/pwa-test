@@ -65,7 +65,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             repeat: Infinity, 
             ease: "easeInOut" 
           }}
-          className="w-24 h-24 mx-auto mb-6 bg-black rounded-2xl flex items-center justify-center shadow-lg"
+          className="w-24 h-24 mx-auto mb-6 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg"
         >
           <motion.svg
             initial={{ pathLength: 0 }}
@@ -90,9 +90,9 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-4xl font-bold text-black mb-2 tracking-tight"
+          className="text-4xl font-bold text-blue-900 mb-2 tracking-tight"
         >
-          NewsReader
+          MedHubAI
         </motion.h1>
 
         {/* Tagline */}
@@ -100,9 +100,9 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.0 }}
-          className="text-gray-600 text-lg font-medium"
+          className="text-blue-600 text-lg font-medium"
         >
-          Stay informed, anywhere
+          Healthcare news at your fingertips
         </motion.p>
       </motion.div>
 
@@ -114,12 +114,12 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         className="relative z-10 w-64"
       >
         {/* Progress bar background */}
-        <div className="h-1 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-1 bg-blue-100 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.3 }}
-            className="h-full bg-gradient-to-r from-gray-800 to-black rounded-full"
+            className="h-full bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"
           />
         </div>
         
@@ -129,8 +129,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           transition={{ duration: 1.5, repeat: Infinity }}
           className="text-center mt-4"
         >
-          <p className="text-gray-500 text-sm font-medium">
-            Loading latest news...
+          <p className="text-blue-500 text-sm font-medium">
+            Loading healthcare news...
           </p>
         </motion.div>
       </motion.div>
@@ -167,8 +167,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         transition={{ duration: 0.6, delay: 1.5 }}
         className="absolute bottom-8 text-center"
       >
-        <p className="text-gray-400 text-xs font-medium">
-          Powered by RSS • Offline Ready
+        <p className="text-blue-400 text-xs font-medium">
+          Powered by MedHubAI.pro • Healthcare News
         </p>
       </motion.div>
     </motion.div>

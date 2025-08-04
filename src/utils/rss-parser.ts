@@ -1,14 +1,14 @@
 import type { NewsArticle } from '../types/news';
 
-// RSS Feed configuration - Design focused
+// RSS Feed configuration - Healthcare focused (proxy-compatible feeds)
 const RSS_FEEDS = {
-  designmilk: 'https://design-milk.com/feed/',
-  fastcodesign: 'https://www.fastcompany.com/co-design/rss',
-  designboom: 'https://www.designboom.com/feed/',
-  dezeen: 'https://www.dezeen.com/feed/',
-  itsnicethat: 'https://www.itsnicethat.com/feed',
-  awwwards: 'https://feeds.feedburner.com/awwwards-sites-of-the-day',
-  default: 'https://design-milk.com/feed/'
+  cdc: 'https://tools.cdc.gov/api/v2/resources/media/132608.rss',
+  who: 'https://www.who.int/rss-feeds/news-english.xml',
+  reuters_health: 'https://feeds.reuters.com/reuters/healthNews',
+  sciencedaily_health: 'https://www.sciencedaily.com/rss/health_medicine.xml',
+  healthday: 'https://consumer.healthday.com/rss/health-news.rss',
+  medpagetoday: 'https://www.medpagetoday.com/rss/all-breaking-news.xml',
+  default: 'https://www.sciencedaily.com/rss/health_medicine.xml'
 };
 
 interface RSSItem {
@@ -81,7 +81,7 @@ export class RSSParser {
     return Math.max(1, Math.ceil(words / wordsPerMinute));
   }
 
-  private static parseRSSItem(item: RSSItem, category: string = 'Design'): NewsArticle {
+  private static parseRSSItem(item: RSSItem, category: string = 'Health'): NewsArticle {
     const cleanTitle = this.stripHtml(item.title);
     const cleanDescription = this.stripHtml(item.description);
     const cleanContent = item.content ? this.stripHtml(item.content) : cleanDescription;
@@ -116,7 +116,7 @@ export class RSSParser {
 
       return data.items
         .slice(0, 20) // Limit to 20 articles
-        .map(item => this.parseRSSItem(item, 'Design'))
+        .map(item => this.parseRSSItem(item, 'Health'))
         .filter(article => article.title && article.summary); // Filter out invalid articles
         
     } catch (error) {
@@ -126,13 +126,32 @@ export class RSSParser {
   }
 
   static async fetchMultipleFeeds(feedUrls: string[] = [RSS_FEEDS.default]): Promise<NewsArticle[]> {
-    const promises = feedUrls.map(url => this.fetchRSSFeed(url).catch(error => {
+    // Try multiple healthcare feeds as fallbacks
+    const defaultFeeds = [
+      RSS_FEEDS.sciencedaily_health,
+      RSS_FEEDS.reuters_health,
+      RSS_FEEDS.who
+    ];
+    
+    const feedsToTry = feedUrls.length > 0 ? feedUrls : defaultFeeds;
+    
+    const promises = feedsToTry.map(url => this.fetchRSSFeed(url).catch(error => {
       console.warn(`Failed to fetch feed ${url}:`, error);
       return [];
     }));
 
-    const results = await Promise.all(promises);
+    const results = await Promise.all(promises);  
     const allArticles = results.flat();
+    
+    // If no articles found, try a simple fallback
+    if (allArticles.length === 0) {
+      console.log('No articles found from feeds, trying simple fallback...');
+      try {
+        return await this.fetchRSSFeed('https://rss.cnn.com/rss/edition.rss');
+      } catch {
+        return [];
+      }
+    }
     
     // Sort by publication date (newest first)
     return allArticles.sort((a, b) => 

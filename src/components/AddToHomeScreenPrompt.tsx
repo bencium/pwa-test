@@ -35,22 +35,22 @@ const AddToHomeScreenPrompt = ({ onDismiss }: AddToHomeScreenPromptProps) => {
   if (canPrompt && platform.isAndroid) {
     return (
       <div className="fixed bottom-20 left-4 right-4 z-50 animate-slide-up">
-        <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 mx-auto max-w-sm">
+        <div className="bg-blue-50 rounded-lg shadow-lg border border-blue-200 p-4 mx-auto max-w-sm">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </div>
               <div className="flex-1">
-                <h3 className="font-medium text-gray-900 text-sm">Install News Reader</h3>
-                <p className="text-xs text-gray-500">Get the full app experience</p>
+                <h3 className="font-medium text-blue-900 text-sm">Install MedHubAI App</h3>
+                <p className="text-xs text-blue-600">Get the full app experience</p>
               </div>
             </div>
             <button
               onClick={handleDismiss}
-              className="text-gray-400 hover:text-gray-600 p-1"
+              className="text-blue-400 hover:text-blue-600 p-1"
               aria-label="Close"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,13 +62,13 @@ const AddToHomeScreenPrompt = ({ onDismiss }: AddToHomeScreenPromptProps) => {
           <div className="flex gap-2">
             <button
               onClick={handleDismiss}
-              className="flex-1 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
+              className="flex-1 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
             >
               Not now
             </button>
             <button
               onClick={handleInstallClick}
-              className="flex-1 px-3 py-2 text-sm bg-gray-900 text-white hover:bg-gray-800 rounded-md transition-colors"
+              className="flex-1 px-3 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors"
             >
               Install
             </button>
@@ -82,10 +82,10 @@ const AddToHomeScreenPrompt = ({ onDismiss }: AddToHomeScreenPromptProps) => {
   if (platform.isIOS) {
     return (
       <div className="fixed bottom-20 left-4 right-4 z-50 animate-slide-up">
-        <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 mx-auto max-w-sm relative">
+        <div className="bg-blue-50 rounded-lg shadow-lg border border-blue-200 p-4 mx-auto max-w-sm relative">
           <button
             onClick={handleDismiss}
-            className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 p-1"
+            className="absolute top-2 right-2 text-blue-400 hover:text-blue-600 p-1"
             aria-label="Close"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ const AddToHomeScreenPrompt = ({ onDismiss }: AddToHomeScreenPromptProps) => {
           </button>
           
           <div className="pr-6">
-            <p className="text-sm text-gray-700 mb-4">
+            <p className="text-sm text-blue-800 mb-4">
               Install this web app on your iPhone: tap{' '}
               <span className="inline-flex items-center mx-1">
                 <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
@@ -123,22 +123,22 @@ const AddToHomeScreenPrompt = ({ onDismiss }: AddToHomeScreenPromptProps) => {
   // Desktop/Other Instructions
   return (
     <div className="fixed bottom-20 left-4 right-4 z-50 animate-slide-up">
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 mx-auto max-w-sm">
+      <div className="bg-blue-50 rounded-lg shadow-lg border border-blue-200 p-4 mx-auto max-w-sm">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 0v10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
               </svg>
             </div>
             <div className="flex-1">
-              <h3 className="font-medium text-gray-900 text-sm">Install News Reader</h3>
-              <p className="text-xs text-gray-500">Look for the install icon in your browser</p>
+              <h3 className="font-medium text-blue-900 text-sm">Install MedHubAI App</h3>
+              <p className="text-xs text-blue-600">Look for the install icon in your browser</p>
             </div>
           </div>
           <button
             onClick={handleDismiss}
-            className="text-gray-400 hover:text-gray-600 p-1"
+            className="text-blue-400 hover:text-blue-600 p-1"
             aria-label="Close"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,7 +150,7 @@ const AddToHomeScreenPrompt = ({ onDismiss }: AddToHomeScreenPromptProps) => {
         <div className="flex gap-2">
           <button
             onClick={handleDismiss}
-            className="flex-1 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
+            className="flex-1 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
           >
             Maybe later
           </button>

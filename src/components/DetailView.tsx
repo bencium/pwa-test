@@ -19,7 +19,7 @@ const DetailView = ({ article, isFavorite, onBack, onToggleFavorite }: DetailVie
   };
 
   return (
-    <div className="h-full bg-white">
+    <div className="h-full bg-white overflow-x-hidden">
       {/* Hero Image */}
       {article.imageUrl && (
         <div className="relative w-full h-64 sm:h-80 lg:h-96 overflow-hidden">
@@ -64,38 +64,38 @@ const DetailView = ({ article, isFavorite, onBack, onToggleFavorite }: DetailVie
       )}
 
       {/* Article Content */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="w-full max-w-4xl mx-auto px-4 py-6 overflow-x-hidden">
         {/* Category and Meta */}
-        <div className="flex items-center gap-3 mb-4">
-          <span className="inline-block px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-full">
+        <div className="flex items-center gap-3 mb-4 flex-wrap">
+          <span className="inline-block px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-full break-words">
             {article.category}
           </span>
           <span className="text-sm text-gray-500">{article.readTime} min read</span>
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-black leading-tight mb-6">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-black leading-tight mb-6 break-words">
           {article.title}
         </h1>
 
         {/* Author and Date */}
         <div className="flex items-center gap-4 mb-8 pb-6 border-b-2 border-gray-300">
-          <div className="flex-1">
-            <p className="text-black font-bold text-lg">{article.author}</p>
-            <p className="text-base text-gray-700 font-medium">{formatDate(article.publishedAt)}</p>
+          <div className="flex-1 min-w-0">
+            <p className="text-black font-bold text-lg break-words">{article.author}</p>
+            <p className="text-base text-gray-700 font-medium break-words">{formatDate(article.publishedAt)}</p>
           </div>
         </div>
 
         {/* Summary */}
         <div className="mb-8">
-          <p className="text-xl text-black leading-relaxed font-semibold">
+          <p className="text-lg sm:text-xl text-black leading-relaxed font-semibold break-words">
             {article.summary}
           </p>
         </div>
 
         {/* Main Content */}
-        <div className="prose prose-xl max-w-none">
-          <div className="text-black text-lg leading-relaxed whitespace-pre-line font-medium">
+        <div className="prose prose-lg max-w-full">
+          <div className="text-black text-base sm:text-lg leading-relaxed whitespace-pre-line font-medium break-words overflow-wrap-anywhere">
             {article.content}
           </div>
         </div>

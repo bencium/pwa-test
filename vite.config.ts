@@ -29,9 +29,9 @@ export default defineConfig({
         ],
       },
       manifest: {
-        name: 'News Reader PWA',
-        short_name: 'NewsReader',
-        description: 'A cross-platform news reader app',
+        name: 'MedHubAI App Demo',
+        short_name: 'MedHubAI',
+        description: 'A healthcare news reader app by MedHubAI.pro',
         theme_color: '#000000',
         background_color: '#fafafa',
         display: 'standalone',
