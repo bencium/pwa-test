@@ -13,9 +13,11 @@ interface RSSItem {
   author?: string;
   category?: string;
   content?: string;
+  thumbnail?: string;
   enclosure?: {
     url: string;
     type: string;
+    thumbnail?: string;
   };
 }
 
@@ -45,8 +47,20 @@ export class RSSParser {
     return id.substring(0, 16).padStart(8, '0');
   }
 
-  private static extractImageFromContent(content: string, description: string): string | undefined {
-    // Try multiple image extraction patterns for news RSS feeds
+  private static extractImageFromItem(item: RSSItem): string | undefined {
+    // First, check for direct thumbnail field from RSS2JSON
+    if (item.thumbnail && item.thumbnail.startsWith('http')) {
+      return item.thumbnail;
+    }
+    
+    // Check enclosure thumbnail
+    if (item.enclosure?.thumbnail && item.enclosure.thumbnail.startsWith('http')) {
+      return item.enclosure.thumbnail;
+    }
+    
+    // Fallback to parsing HTML content
+    const textToSearch = (item.content || '') + ' ' + (item.description || '');
+    
     const patterns = [
       /<img[^>]+src="([^">]+)"/i,  // Standard img tag
       /<media:content[^>]+url="([^">]+)"/i,  // Media RSS
@@ -54,13 +68,10 @@ export class RSSParser {
       /url="([^"]*\.(jpg|jpeg|png|gif|webp)[^"]*)"[^>]*>/i  // URL in attributes
     ];
     
-    const textToSearch = content + ' ' + description;
-    
     for (const pattern of patterns) {
       const match = textToSearch.match(pattern);
       if (match && match[1]) {
         const imageUrl = match[1];
-        // More flexible image URL validation
         if (imageUrl.match(/\.(jpg|jpeg|png|gif|webp)/i) && imageUrl.startsWith('http')) {
           return imageUrl;
         }
@@ -99,7 +110,7 @@ export class RSSParser {
       content: cleanContent.length > 500 ? cleanContent : cleanDescription.repeat(3), // Ensure minimum content length
       author: item.author || 'News Staff',
       publishedAt: item.pubDate || new Date().toISOString(),
-      imageUrl: this.extractImageFromContent(item.content || '', item.description),
+      imageUrl: this.extractImageFromItem(item),
       category: item.category || category,
       readTime: this.calculateReadTime(cleanContent)
     };
