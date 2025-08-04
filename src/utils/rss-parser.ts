@@ -1,8 +1,8 @@
 import type { NewsArticle } from '../types/news';
 
-// RSS Feed configuration - Simple working feed for testing
+// RSS Feed configuration - Harvard Health Blog (Health with images)
 const RSS_FEEDS = {
-  default: 'https://techcrunch.com/feed/'
+  default: 'https://www.health.harvard.edu/blog/feed'
 };
 
 interface RSSItem {
@@ -87,7 +87,7 @@ export class RSSParser {
     return Math.max(1, Math.ceil(words / wordsPerMinute));
   }
 
-  private static parseRSSItem(item: RSSItem, category: string = 'Tech'): NewsArticle {
+  private static parseRSSItem(item: RSSItem, category: string = 'Health'): NewsArticle {
     const cleanTitle = this.stripHtml(item.title);
     const cleanDescription = this.stripHtml(item.description);
     const cleanContent = item.content ? this.stripHtml(item.content) : cleanDescription;
@@ -122,7 +122,7 @@ export class RSSParser {
 
       return data.items
         .slice(0, 20) // Limit to 20 articles
-        .map(item => this.parseRSSItem(item, 'Tech'))
+        .map(item => this.parseRSSItem(item, 'Health'))
         .filter(article => article.title && article.summary); // Filter out invalid articles
         
     } catch (error) {
