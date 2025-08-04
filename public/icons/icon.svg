@@ -1,0 +1,23 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="64" fill="#ffffff"/>
+  <rect x="32" y="32" width="448" height="448" rx="32" fill="#f5f5f5"/>
+  
+  <!-- News icon -->
+  <rect x="80" y="120" width="352" height="272" rx="16" fill="#ffffff" stroke="#d4d4d4" stroke-width="2"/>
+  
+  <!-- Header -->
+  <rect x="96" y="136" width="320" height="40" rx="4" fill="#737373"/>
+  
+  <!-- Article lines -->
+  <rect x="96" y="192" width="280" height="12" rx="2" fill="#a3a3a3"/>
+  <rect x="96" y="216" width="320" height="12" rx="2" fill="#a3a3a3"/>
+  <rect x="96" y="240" width="240" height="12" rx="2" fill="#a3a3a3"/>
+  
+  <!-- Image placeholder -->
+  <rect x="96" y="272" width="100" height="80" rx="8" fill="#e5e5e5"/>
+  
+  <!-- More text lines -->
+  <rect x="212" y="280" width="160" height="8" rx="2" fill="#d4d4d4"/>
+  <rect x="212" y="296" width="180" height="8" rx="2" fill="#d4d4d4"/>
+  <rect x="212" y="312" width="140" height="8" rx="2" fill="#d4d4d4"/>
+</svg>

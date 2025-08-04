@@ -1,0 +1,73 @@
+{
+  "name": "pwa-news-reader",
+  "version": "1.0.0",
+  "description": "A cross-platform Progressive Web App (PWA) news reader with offline functionality, smooth animations, and native app-like experience",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "generate-pwa-assets": "pwa-assets-generator",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "predeploy": "npm run typecheck && npm run test:ci && npm run build",
+    "deploy:preview": "npm run predeploy",
+    "deploy:prod": "npm run predeploy"
+  },
+  "keywords": [
+    "pwa",
+    "progressive-web-app",
+    "news-reader",
+    "offline-first",
+    "react",
+    "typescript",
+    "vite",
+    "framer-motion",
+    "tailwindcss",
+    "service-worker",
+    "rss-feeds",
+    "mobile-app",
+    "cross-platform"
+  ],
+  "author": "Bence",
+  "license": "MIT",
+  "homepage": "https://github.com/bencium/pwa-test#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bencium/pwa-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bencium/pwa-test/issues"
+  },
+  "type": "module",
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-slot": "^1.2.3",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwind-merge": "^3.3.1",
+    "vite-plugin-pwa": "^1.0.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "@vite-pwa/assets-generator": "^1.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.21",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "ts-jest": "^29.4.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.0.6"
+  }
+}
