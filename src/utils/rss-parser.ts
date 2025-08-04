@@ -1,14 +1,8 @@
 import type { NewsArticle } from '../types/news';
 
-// RSS Feed configuration - Healthcare focused with images
+// RSS Feed configuration - Simple working feed for testing
 const RSS_FEEDS = {
-  cnn_health: 'https://rss.cnn.com/rss/cnn_health.rss',
-  fox_health: 'https://moxie.foxnews.com/google-publisher/health.xml',
-  nbc_health: 'https://feeds.nbcnews.com/nbcnews/public/health',
-  abc_health: 'https://abcnews.go.com/abcnews/healthheadlines',
-  healthday: 'https://consumer.healthday.com/rss/health-news.rss',
-  reuters_health: 'https://feeds.reuters.com/reuters/healthNews',
-  default: 'https://rss.cnn.com/rss/cnn_health.rss'
+  default: 'https://techcrunch.com/feed/'
 };
 
 interface RSSItem {
@@ -93,7 +87,7 @@ export class RSSParser {
     return Math.max(1, Math.ceil(words / wordsPerMinute));
   }
 
-  private static parseRSSItem(item: RSSItem, category: string = 'Health'): NewsArticle {
+  private static parseRSSItem(item: RSSItem, category: string = 'Tech'): NewsArticle {
     const cleanTitle = this.stripHtml(item.title);
     const cleanDescription = this.stripHtml(item.description);
     const cleanContent = item.content ? this.stripHtml(item.content) : cleanDescription;
@@ -128,7 +122,7 @@ export class RSSParser {
 
       return data.items
         .slice(0, 20) // Limit to 20 articles
-        .map(item => this.parseRSSItem(item, 'Health'))
+        .map(item => this.parseRSSItem(item, 'Tech'))
         .filter(article => article.title && article.summary); // Filter out invalid articles
         
     } catch (error) {
@@ -138,37 +132,18 @@ export class RSSParser {
   }
 
   static async fetchMultipleFeeds(feedUrls: string[] = [RSS_FEEDS.default]): Promise<NewsArticle[]> {
-    // Try multiple healthcare feeds with images as fallbacks
-    const defaultFeeds = [
-      RSS_FEEDS.cnn_health,
-      RSS_FEEDS.nbc_health,
-      RSS_FEEDS.reuters_health
-    ];
+    // Use single reliable feed
+    const feedUrl = feedUrls.length > 0 ? feedUrls[0] : RSS_FEEDS.default;
     
-    const feedsToTry = feedUrls.length > 0 ? feedUrls : defaultFeeds;
-    
-    const promises = feedsToTry.map(url => this.fetchRSSFeed(url).catch(error => {
-      console.warn(`Failed to fetch feed ${url}:`, error);
+    try {
+      const articles = await this.fetchRSSFeed(feedUrl);
+      return articles.sort((a, b) => 
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+    } catch (error) {
+      console.warn(`Failed to fetch feed ${feedUrl}:`, error);
       return [];
-    }));
-
-    const results = await Promise.all(promises);  
-    const allArticles = results.flat();
-    
-    // If no articles found, try a simple fallback
-    if (allArticles.length === 0) {
-      console.log('No articles found from feeds, trying simple fallback...');
-      try {
-        return await this.fetchRSSFeed('https://rss.cnn.com/rss/edition.rss');
-      } catch {
-        return [];
-      }
     }
-    
-    // Sort by publication date (newest first)
-    return allArticles.sort((a, b) => 
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
   }
 
   // Test method for validation

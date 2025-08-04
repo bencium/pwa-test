@@ -54,10 +54,10 @@ const PWAIntro = () => {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-lg">⚡</span>
-              <h3 className="font-bold text-lg">Progressive Web App</h3>
+              <h3 className="font-bold text-lg">More than a website...</h3>
             </div>
             <p className="text-gray-300 text-sm">
-              More than a website - app-like experience
+               An app-like experience!
             </p>
           </div>
           <motion.div
