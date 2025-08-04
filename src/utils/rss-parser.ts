@@ -1,8 +1,8 @@
 import type { NewsArticle } from '../types/news';
 
-// RSS Feed configuration - Harvard Health Blog (Health with images)
+// RSS Feed configuration - Medical Xpress (Health news with images)
 const RSS_FEEDS = {
-  default: 'https://www.health.harvard.edu/blog/feed'
+  default: 'https://medicalxpress.com/rss-feed/'
 };
 
 interface RSSItem {
