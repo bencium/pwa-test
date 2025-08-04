@@ -4,8 +4,7 @@
 
 # Build environment
 [build.environment]
-  NODE_VERSION = "18"
-  NPM_FLAGS = "--no-optional"
+  NODE_VERSION = "20"
 
 # SPA redirect - essential for React Router and PWA
 [[redirects]]
