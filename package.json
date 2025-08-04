@@ -54,6 +54,7 @@
     "vite-plugin-pwa": "^1.0.2"
   },
   "devDependencies": {
+    "@netlify/plugin-sitemap": "^0.8.1",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^30.0.0",
